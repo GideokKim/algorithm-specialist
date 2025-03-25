@@ -52,7 +52,7 @@ export async function getUserSubmissions(handle: string, page: number = 1): Prom
 }
 
 export async function getMazandiImage(handle: string): Promise<string> {
-  return `http://mazandi.herokuapp.com/api?handle=${handle}&theme=warm`;
+  return `https://mazandi.herokuapp.com/api?handle=${handle}&theme=warm`;
 }
 
 function createSolvedDict(history: SolvedHistory[]): Record<string, number> {

@@ -42,7 +42,7 @@ export default function Home() {
             <div key={username} className="streak-card">
               <h4>{username}&apos;s Solved.ac Streak</h4>
               <img 
-                src={`http://mazandi.herokuapp.com/api?handle=${username}&theme=warm`}
+                src={`https://mazandi.herokuapp.com/api?handle=${username}&theme=warm`}
                 alt={`${username}'s solved.ac streak`}
               />
             </div>
