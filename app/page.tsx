@@ -6,6 +6,7 @@ import { UserRanking } from './components/UserRanking';
 // GitHub 사용자명과 solved.ac 사용자명 매핑
 const USER_MAPPING = {
   "GideokKim": "potatooftaebaek",
+  "jooeun921": "dmswnqkr1197",
   "Bosongsae": "covertnest",
   "zer0ken": "zer0ken",
   "Yoonsoyoung02": "thdud4231",
