@@ -1,8 +1,6 @@
 interface SolvedacUser {
   handle: string;
   solvedCount: number;
-  tier: number;
-  rating: number;
 }
 
 interface SolvedHistory {

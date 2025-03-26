@@ -56,26 +56,6 @@ h4 {
   color: var(--gray-900);
 }
 
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.p-8 {
-  padding: 2rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
-.mb-12 {
-  margin-bottom: 3rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -94,10 +74,6 @@ h4 {
   font-weight: 600;
 }
 
-.space-y-6 > * + * {
-  margin-top: 1.5rem;
-}
-
 .flex {
   display: flex;
 }
@@ -108,18 +84,6 @@ h4 {
 
 .grid {
   display: grid;
-}
-
-@media (min-width: 768px) {
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .lg\:grid-cols-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 input[type="text"] {
@@ -145,14 +109,6 @@ button:hover:not(:disabled) {
 button:disabled {
   background-color: var(--gray-200);
   cursor: not-allowed;
-}
-
-.card {
-  padding: 1rem;
-  border: 1px solid var(--gray-200);
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  background-color: white;
 }
 
 .table {
@@ -200,20 +156,4 @@ button:disabled {
 
 .text-gray-500 {
   color: var(--gray-500);
-}
-
-.streak-image {
-  margin: 1rem 0;
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.streak-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.overflow-x-auto {
-  overflow-x: auto;
 } 

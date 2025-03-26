@@ -1,6 +1,3 @@
-'use client';
-
-import { UserStreak } from './components/UserStreak';
 import { UserRanking } from './components/UserRanking';
 
 // GitHub 사용자명과 solved.ac 사용자명 매핑
@@ -28,7 +25,6 @@ const USER_MAPPING = {
   "hongwon1031": "hongwon1031"
 };
 
-const GITHUB_USERS = Object.keys(USER_MAPPING);
 const SOLVED_USERS = Object.values(USER_MAPPING);
 
 export default function Home() {
