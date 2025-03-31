@@ -81,6 +81,13 @@ export function UserRanking({ userMapping }: UserRankingProps) {
   return (
     <div style={{ marginBottom: '30px' }}>
       <h4>알고리즘 스터디 스트릭 랭킹</h4>
+      <div>
+        <strong>⚠️ 주의사항:</strong>
+        <ul>
+          <li><strong>현재 스트릭</strong> 계산에서 대회 코드만 제출한 날은 <em>비공식 Solved.ac</em> API에 의해 풀이 이력이 획득되지 않아 계산이 되지 않을 수 있습니다.</li>
+          <li><strong>최장 스트릭</strong>은 <em>비공식 Solved.ac</em> API에 있는 수치를 가져왔기 때문에 현재 스트릭보다 낮을 수 있습니다.</li>
+        </ul>
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
