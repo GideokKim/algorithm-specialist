@@ -16,7 +16,6 @@ const USER_MAPPING = {
   "wnsdlfrns": "jl92",
   "weg-9000": "weg1456",
   "serin826": "rin0742",
-  "jiiiiiiiy": "",
   "YiHeeJu": "lehejo0330",
   "chaeengg": "bchaeeun9",
   "Kristyn-Yoon": "kristyn00",

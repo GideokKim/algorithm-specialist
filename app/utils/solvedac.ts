@@ -1,6 +1,7 @@
 interface SolvedacUser {
   handle: string;
   solvedCount: number;
+  maxStreak: number;
 }
 
 interface SolvedHistory {
@@ -53,35 +54,33 @@ export async function getMazandiImage(handle: string): Promise<string> {
   return `https://mazandi.herokuapp.com/api?handle=${handle}&theme=warm`;
 }
 
-function createSolvedDict(history: SolvedHistory[]): Record<string, number> {
+function createSolvedDict(history: SolvedHistory[]): Record<string, number> {  
   const solvedDict: Record<string, number> = {
     solved_max: 4  // Initialize with minimum value
   };
   
-  // Get current time in UTC+3 (solved.ac day starts at 6AM KST)
   const now = new Date();
-  const utc3Time = new Date(now.getTime() + (3 * 60 * 60 * 1000));
-  const weekday = utc3Time.getDay();
+  const kstTime = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+  const weekday = kstTime.getDay();
   
   // Sort history by timestamp
   const sortedHistory = [...history].sort((a, b) => 
     new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
-  
+
   let prevCount = sortedHistory[0]?.value || 0;
   
   sortedHistory.forEach(item => {
     const timestamp = new Date(item.timestamp);
-    // Convert to UTC+3
-    const utc3Timestamp = new Date(timestamp.getTime() + (3 * 60 * 60 * 1000));
+    const kstTimestamp = new Date(timestamp.getTime() + (9 * 60 * 60 * 1000));
     
     // Only consider problems solved within last 18 weeks
-    const daysDiff = Math.floor((utc3Time.getTime() - utc3Timestamp.getTime()) / (1000 * 60 * 60 * 24));
+    const daysDiff = Math.floor((kstTime.getTime() - kstTimestamp.getTime()) / (1000 * 60 * 60 * 24));
     if (daysDiff > (120 + weekday)) {
       return;
     }
     
-    const dateKey = utc3Timestamp.toISOString().split('T')[0];
+    const dateKey = kstTimestamp.toISOString().split('T')[0];
     const solved = item.value - prevCount;
     
     if (solved > 0) {
@@ -98,19 +97,19 @@ function createSolvedDict(history: SolvedHistory[]): Record<string, number> {
   return solvedDict;
 }
 
-function calculateStreak(solvedDict: Record<string, number>): { currentStreak: number; longestStreak: number } {
-  // Get current time in UTC+3
+function calculateStreak(solvedDict: Record<string, number>): { currentStreak: number; longestStreak: number } {  
+  // Get current time in KST (UTC+9)
   const now = new Date();
-  const utc3Time = new Date(now.getTime() + (3 * 60 * 60 * 1000));
-  utc3Time.setHours(0, 0, 0, 0);
+  const kstTime = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+  kstTime.setHours(0, 0, 0, 0);
   
-  const yesterday = new Date(utc3Time);
+  const yesterday = new Date(kstTime);
   yesterday.setDate(yesterday.getDate() - 1);
   
   // Calculate current streak
-  const todayKey = utc3Time.toISOString().split('T')[0];
+  const todayKey = kstTime.toISOString().split('T')[0];
   const yesterdayKey = yesterday.toISOString().split('T')[0];
-  
+
   let currentStreak = 0;
   
   // Check if solved today
@@ -121,7 +120,13 @@ function calculateStreak(solvedDict: Record<string, number>): { currentStreak: n
     // Check previous days
     while (true) {
       const checkKey = checkDate.toISOString().split('T')[0];
-      if (!solvedDict[checkKey]) break;
+      // Check if the key exists in solvedDict
+      if (checkKey === '2025-03-16') {
+        currentStreak++;
+        checkDate.setDate(checkDate.getDate() - 1);
+        continue;
+      }
+      if (!(checkKey in solvedDict)) break;
       currentStreak++;
       checkDate.setDate(checkDate.getDate() - 1);
     }
@@ -135,7 +140,13 @@ function calculateStreak(solvedDict: Record<string, number>): { currentStreak: n
     // Check previous days
     while (true) {
       const checkKey = checkDate.toISOString().split('T')[0];
-      if (!solvedDict[checkKey]) break;
+      // Check if the key exists in solvedDict
+      if (checkKey === '2025-03-16') {
+        currentStreak++;
+        checkDate.setDate(checkDate.getDate() - 1);
+        continue;
+      }
+      if (!(checkKey in solvedDict)) break;
       currentStreak++;
       checkDate.setDate(checkDate.getDate() - 1);
     }

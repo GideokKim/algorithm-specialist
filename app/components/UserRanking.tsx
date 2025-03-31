@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getUserStreak } from '../utils/solvedac';
+import { getUserStreak, getUserData } from '../utils/solvedac';
 
 interface RankedUser {
   handle: string;
   solvedHandle: string;
   currentStreak: number;
+  maxStreak: number;
   rank: number;
   isLoading?: boolean;
 }
@@ -28,18 +29,22 @@ export function UserRanking({ userMapping }: UserRankingProps) {
           .map(async ([githubHandle, solvedHandle]) => {
             if (!solvedHandle) return null;
             try {
+              const userData = await getUserData(solvedHandle);
               const { currentStreak } = await getUserStreak(solvedHandle);
+              
               return { 
                 handle: githubHandle,
                 solvedHandle,
-                currentStreak 
+                currentStreak,
+                maxStreak: userData?.maxStreak || 0
               };
             } catch (error) {
               console.error(`Error fetching streak for ${solvedHandle}:`, error);
               return { 
                 handle: githubHandle,
                 solvedHandle,
-                currentStreak: 0 
+                currentStreak: 0,
+                maxStreak: 0
               };
             }
           })
@@ -83,7 +88,7 @@ export function UserRanking({ userMapping }: UserRankingProps) {
               <th>순위</th>
               <th>GitHub ID</th>
               <th>solved.ac</th>
-              <th>현재 스트릭</th>
+              <th>현재 스트릭 / 최장 스트릭</th>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +104,7 @@ export function UserRanking({ userMapping }: UserRankingProps) {
                   <span>{user.solvedHandle}</span>
                 </td>
                 <td>
-                  <span>{user.currentStreak}일</span>
+                  <span>{user.currentStreak}일 / {user.maxStreak}일</span>
                 </td>
               </tr>
             ))}

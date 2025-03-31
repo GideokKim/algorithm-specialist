@@ -37,7 +37,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Handle is required' }, { status: 400 });
     }
 
-    console.log(`Solved.ac API: Using ${handle}`);
     const data = await fetchFromSolvedAC(
       type === 'history'
         ? `${SOLVED_AC_API}/user/history?handle=${handle}&topic=solvedCount`
